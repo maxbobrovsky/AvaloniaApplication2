@@ -1,9 +1,10 @@
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using AvaloniaApplication2.Models;
-using System.Collections.Generic;
+using System;
+using System.Windows;
+using RoutedEventArgs = Avalonia.Interactivity.RoutedEventArgs;
+using Window = Avalonia.Controls.Window;
 
 namespace AvaloniaApplication2
 {
@@ -12,7 +13,7 @@ namespace AvaloniaApplication2
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new UrlViewModel { Url = string.Empty, ArtistName = string.Empty};
+            this.DataContext = new UrlViewModel { Url = "Enter Url Here and press button", ArtistName = string.Empty};
 
 
 #if DEBUG
@@ -27,13 +28,22 @@ namespace AvaloniaApplication2
 
         public void GetArtistDataButton_Click(object sender, RoutedEventArgs e)
         {
-            var context = this.DataContext as UrlViewModel;
+            var urlViewModel = this.DataContext as UrlViewModel;
+            var playlistDataProcessor = new PlaylistDataProcessor();
 
-            PlaylistDataProcessor pdr = new PlaylistDataProcessor();
-            var help_model = pdr.Process(context.Url);
-            context.ArtistName = help_model.ArtistName;
-            context.PlaylistTitle = help_model.PlaylistTitle;
-            context.Songs = help_model.Songs;
+            var playlistDataResult = playlistDataProcessor.Process(urlViewModel.Url);
+
+            if (!playlistDataResult.IsSuccess)
+            {
+                urlViewModel.ArtistName = string.Empty;
+                urlViewModel.PlaylistSongs = Array.Empty<PlaylistWithSongs>();
+
+                MessageBox.Show(playlistDataResult.ErrorMessage);
+                return;
+            }
+
+            urlViewModel.ArtistName = playlistDataResult.ArtistName;
+            urlViewModel.PlaylistSongs = playlistDataResult.Playlists;
         }
     }
 }

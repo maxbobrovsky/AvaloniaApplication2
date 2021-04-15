@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AvaloniaApplication2.Models
 {
     internal class UrlViewModel : INotifyPropertyChanged
     {
-
         private string _url;
-        private string _artistName;
-        private string _playlistTitle;
-        private List<string> _songs;
+
         public string Url
         {
             get { return _url; }
@@ -26,8 +19,9 @@ namespace AvaloniaApplication2.Models
                     OnPropertyChanged();
                 }
             }
-
         }
+
+        private string _artistName;
 
         public string ArtistName
         {
@@ -40,9 +34,9 @@ namespace AvaloniaApplication2.Models
                     OnPropertyChanged();
                 }
             }
-
         }
 
+        private string _playlistTitle;
 
         public string PlaylistTitle
         {
@@ -55,15 +49,17 @@ namespace AvaloniaApplication2.Models
                     OnPropertyChanged();
                 }
             }
-
         }
 
-        public List<string> Songs
+        private IReadOnlyCollection<PlaylistWithSongs> _songs;
+
+        public IReadOnlyCollection<PlaylistWithSongs> PlaylistSongs
         {
             get { return _songs; }
             set {
                 _songs = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged(); 
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

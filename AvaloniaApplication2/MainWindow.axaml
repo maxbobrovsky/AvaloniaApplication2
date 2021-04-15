@@ -2,19 +2,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="950"
+        mc:Ignorable="d" d:DesignWidth="850" d:DesignHeight="1100"
         x:Class="AvaloniaApplication2.MainWindow"
-        Title="AvaloniaApplication2">
-	<StackPanel Orientation="Vertical" MaxWidth ="800" MaxHeight ="1200">
-		<TextBlock Text ="Enter Url(should enter full path including https)"/>
+        Title="AvaloniaApplication2"
+		WindowState="Maximized"
+		Background ="Gray">
+	<StackPanel Orientation="Vertical" MaxWidth ="1200" MaxHeight ="1500" Background ="Gray">
 		<TextBox Text ="{Binding Url}"/>
-		<Button Content="Say hi!" Click="GetArtistDataButton_Click"/>
-		<TextBlock Text ="Artist Name"/>
-		<TextBox Text ="{Binding ArtistName}"/>
-		<TextBlock Text ="Playlist Title"/>
-		<TextBox Text ="{Binding PlaylistTitle}"/>
-		<ListBox Items="{Binding Songs}"/>
-		
-
+		<Button Content="Get data " Click="GetArtistDataButton_Click"/>
+		<TextBlock Text ="Artist Name" />
+		<TextBox Text ="{Binding ArtistName}" />
+		<TextBlock Text="Playlists"/>
+		<ListBox FontSize="10" Items="{Binding PlaylistSongs}" VirtualizationMode="Simple" ScrollViewer.VerticalScrollBarVisibility="Visible" Height="550" Margin="1,1,0,0" Background="Gray">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<Border Background="Yellow" CornerRadius="4" Padding="4">
+						<TextBlock Text="{Binding}"/>
+					</Border>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 	</StackPanel>
 </Window>
