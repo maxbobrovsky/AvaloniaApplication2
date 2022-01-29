@@ -5,7 +5,8 @@ using System.Runtime.CompilerServices;
 namespace AvaloniaApplication2.Models
 {
     internal class UrlViewModel : INotifyPropertyChanged
-    {
+    {   
+        //url to parse
         private string _url;
 
         public string Url
